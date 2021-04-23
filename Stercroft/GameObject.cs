@@ -11,7 +11,7 @@ namespace Stercroft
 
         public float rotation = 0f;
 
-        static List<GameObject> gameObjectsInScene = new List<GameObject>();
+        public static List<GameObject> gameObjectsInScene = new List<GameObject>();
         public static Camera2D camera = new Camera2D();
 
         public GameObject() //This constructor adds in the current game object in question to the scene

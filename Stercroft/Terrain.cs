@@ -9,7 +9,7 @@ namespace Stercroft
     {
         public static List<Terrain> terrains = new List<Terrain>();
 
-        private Rectangle body;
+        public Rectangle body{get;private set;}
 
         public Terrain(float posX, float posY)
         {

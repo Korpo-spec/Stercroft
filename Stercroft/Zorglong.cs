@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Raylib_cs;
+using System.Numerics;
 
 namespace Stercroft
 {
@@ -20,8 +21,14 @@ namespace Stercroft
         public override void Draw()
         {
            
-            Raylib.DrawRectangleRec(body, Color.BLUE);
             
+            Raylib.DrawRectangleRec(checkForterrain, Color.GREEN);
+
+            foreach(Vector2 move in movementsToMake)
+            {
+                Raylib.DrawRectangle((int)move.X, (int)move.Y , 12, 12, Color.YELLOW);
+            }
+            Raylib.DrawRectangleRec(body, Color.BLUE);
 
         }
     }

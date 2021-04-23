@@ -13,10 +13,12 @@ namespace Stercroft
             Console.WriteLine("Hello World!");
             new Terrain(50, 50);
             new Terrain(25, 75);
-            new Zorglong(31.25f , 56.25f);
+            Zorglong zorglis = new Zorglong(31f , 56f);
+            zorglis.movementSpeed = 5;
             GameObject.camera.zoom = 1f; //A zoom variable for the camera to work
             GameObject.camera.target = new Vector2(0,0); // Where the camera is pointed at
-            GameObject.camera.offset = new Vector2(500, 400);
+            GameObject.camera.offset = new Vector2(0, 0);
+            
 
             while(!Raylib.WindowShouldClose())
             {
