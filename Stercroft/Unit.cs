@@ -44,7 +44,9 @@ namespace Stercroft
             {
                 movementsToMake.Clear();
                 currentMoveToMake = 1;
-                
+                movementDirection.X = 0;
+                movementDirection.Y = 0;
+                directionChanced = true;
                 
                 Vector2 mousePos = Raylib.GetMousePosition();
                 FindPath(mousePos);
@@ -160,8 +162,11 @@ namespace Stercroft
         private Tile currentlyChecking;
         private void FindPath(Vector2 endPos) 
         {
+            position.X = (float.Parse(Math.Round(position.X/25).ToString())* 25) + 6;
+            position.Y = (float.Parse(Math.Round(position.Y/25).ToString())* 25) + 6;
             alreadyChecked.Clear();
             needToCheck.Clear();
+            System.Console.WriteLine(position);
             checkForterrain.x = position.X;
             checkForterrain.y = position.Y;
 
