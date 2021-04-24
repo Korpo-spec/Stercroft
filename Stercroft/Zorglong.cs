@@ -8,7 +8,7 @@ namespace Stercroft
 {
     public class Zorglong :Unit
     {
-        private Rectangle body;
+        
         public Zorglong(float posX, float posY)
         {
             position.X = posX;
@@ -28,6 +28,7 @@ namespace Stercroft
             {
                 Raylib.DrawRectangle((int)move.X, (int)move.Y , 12, 12, Color.YELLOW);
             }
+            
             Raylib.DrawRectangleRec(body, Color.BLUE);
 
         }

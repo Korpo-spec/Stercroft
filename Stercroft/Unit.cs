@@ -20,7 +20,7 @@ namespace Stercroft
 
         private Queue<Vector2> movementOrders = new Queue<Vector2>();
 
-        private Rectangle body;
+        protected Rectangle body;
         protected Rectangle checkForterrain = new Rectangle(0, 0, 12.5f, 12.5f);
 
         public Unit()
@@ -42,6 +42,9 @@ namespace Stercroft
         {
             if(Raylib.IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON))
             {
+                movementsToMake.Clear();
+                currentMoveToMake = 1;
+                
                 
                 Vector2 mousePos = Raylib.GetMousePosition();
                 FindPath(mousePos);
@@ -54,31 +57,32 @@ namespace Stercroft
                     System.Console.WriteLine("waho");
                 }
             }
-            if(movementsToMake.Count > 0)
-            {
+            if(movementsToMake.Count > 0 && currentMoveToMake<movementsToMake.Count)
+            {   
+            
                 
                 if(directionChanced)
                 {
                     directionChanced = false;
                     movementDirection.X = 0;
                     movementDirection.Y = 0;
-                    movementDirection.X = position.X - movementsToMake[currentMoveToMake].X;
-                    movementDirection.Y = position.Y - movementsToMake[currentMoveToMake].Y;
+                    movementDirection.X = movementsToMake[currentMoveToMake].X - position.X;
+                    movementDirection.Y = movementsToMake[currentMoveToMake].Y - position.Y;
                     if(Math.Abs(movementDirection.X) > Math.Abs(movementDirection.Y))
                     {
-                        movementDirection.X = movementDirection.X/movementDirection.X;
-                        movementDirection.Y = movementDirection.Y/movementDirection.X;
+                        movementDirection.X = movementDirection.X/Math.Abs(movementDirection.X);
+                        movementDirection.Y = movementDirection.Y/Math.Abs(movementDirection.X);
                     }
                     else
                     {
-                        movementDirection.X = movementDirection.X/movementDirection.Y;
-                        movementDirection.Y = movementDirection.Y/movementDirection.Y;
+                        movementDirection.X = movementDirection.X/Math.Abs(movementDirection.Y);
+                        movementDirection.Y = movementDirection.Y/Math.Abs(movementDirection.Y);
                     }
                     
                     movementDirection.X = (float)Math.Round(movementDirection.X);
                     movementDirection.Y = (float)Math.Round(movementDirection.Y);
                    
-                    
+                    System.Console.WriteLine(movementDirection);
 
                 }
                 
@@ -86,6 +90,9 @@ namespace Stercroft
 
                 position.X += movementDirection.X * movementSpeed * Raylib.GetFrameTime();
                 position.Y += movementDirection.Y * movementSpeed * Raylib.GetFrameTime();
+
+                //System.Console.WriteLine(position.X);
+                //System.Console.WriteLine(position.Y + "y");
                 
                 if(movementDirection.Y == 0)
                 {
@@ -119,11 +126,30 @@ namespace Stercroft
                             currentMoveToMake++;
                         }
                     }
+                    else
+                    {
+                        if(position.Y < movementsToMake[currentMoveToMake].Y)
+                        {
+                            directionChanced = true;
+                            currentMoveToMake++;
+                            
+                        }
+                    }
                         
                 }
+                body.x = position.X;
+                body.y = position.Y;
+                
+                
             }
-            body.x = position.X;
-            body.y = position.Y;
+            else
+            {
+                
+                movementsToMake.Clear();
+                currentMoveToMake = 1;
+            }
+
+            
             
         }
 
@@ -217,6 +243,7 @@ namespace Stercroft
                     if(checkForterrain.x < endPos.X + 13 && checkForterrain.x > endPos.X - 13 && checkForterrain.y < endPos.Y + 13 && checkForterrain.y > endPos.Y - 13)
                     {
                         System.Console.WriteLine("GoalFound!!");
+                        currentlyChecking = new Tile(currentlyChecking, currentlyChecking.movementCost+ 1, new Vector2(checkForterrain.x , checkForterrain.y));
                         GoalFound = true;
                     }
                     
@@ -226,17 +253,21 @@ namespace Stercroft
                 System.Console.WriteLine(needToCheck.Count);
             }
             System.Console.WriteLine("starting draw");
-            Raylib.BeginMode2D(GameObject.camera);
+            
             Tile previousTile = currentlyChecking;
+            List<Vector2> tempList = new List<Vector2>();
             while(previousTile != null)
             {
                 System.Console.WriteLine(previousTile.position);
-                movementsToMake.Add(previousTile.position);
+                tempList.Add(previousTile.position);
                 previousTile = previousTile.previousTile;
                 System.Console.WriteLine("haj");
             }
-            Raylib.EndMode2D();
-
+            
+            for (int i = tempList.Count-1; i >= 0; i--)
+            {
+                movementsToMake.Add(tempList[i]);
+            }
             
         }
 
