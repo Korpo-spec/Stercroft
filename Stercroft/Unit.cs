@@ -65,26 +65,29 @@ namespace Stercroft
                 
                 if(directionChanced)
                 {
+                    
                     directionChanced = false;
                     movementDirection.X = 0;
                     movementDirection.Y = 0;
-                    movementDirection.X = movementsToMake[currentMoveToMake].X - position.X;
-                    movementDirection.Y = movementsToMake[currentMoveToMake].Y - position.Y;
+                    
+                    movementDirection.X = movementsToMake[currentMoveToMake].X - MathF.Round(position.X);
+                    movementDirection.Y = movementsToMake[currentMoveToMake].Y - MathF.Round(position.Y);
+                    
                     if(Math.Abs(movementDirection.X) > Math.Abs(movementDirection.Y))
                     {
-                        movementDirection.X = movementDirection.X/Math.Abs(movementDirection.X);
-                        movementDirection.Y = movementDirection.Y/Math.Abs(movementDirection.X);
+                        movementDirection.Y = MathF.Round(movementDirection.Y/MathF.Abs(movementDirection.X));
+                        movementDirection.X = MathF.Round(movementDirection.X/MathF.Abs(movementDirection.X));
+                        
                     }
                     else
                     {
-                        movementDirection.X = movementDirection.X/Math.Abs(movementDirection.Y);
-                        movementDirection.Y = movementDirection.Y/Math.Abs(movementDirection.Y);
+                        movementDirection.X = MathF.Round(movementDirection.X/MathF.Abs(movementDirection.Y));
+                        movementDirection.Y = MathF.Round(movementDirection.Y/MathF.Abs(movementDirection.Y));
+                        
                     }
-                    
-                    movementDirection.X = (float)Math.Round(movementDirection.X);
-                    movementDirection.Y = (float)Math.Round(movementDirection.Y);
-                   
-                    System.Console.WriteLine(movementDirection);
+                     
+                    movementDirection.X = MathF.Round(movementDirection.X);
+                    movementDirection.Y = MathF.Round(movementDirection.Y);
 
                 }
                 
