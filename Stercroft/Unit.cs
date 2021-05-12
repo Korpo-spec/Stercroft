@@ -8,9 +8,9 @@ namespace Stercroft
     public class Unit :GameObject
     {
         private int hp;
-        public int movementSpeed{get; set;}
-        public float attackSpeed{get; private set;}
-        public float attackRange{get; private set;}
+        public int movementSpeed{get; protected set;}
+        public float attackSpeed{get; protected set;}
+        public float attackRange{get; protected set;}
 
         private Vector2[] movements;
 
@@ -50,102 +50,14 @@ namespace Stercroft
                 
                 Vector2 mousePos = Raylib.GetMousePosition();
                 FindPath(mousePos);
-                System.Console.WriteLine(mousePos);
-                checkForterrain.x = mousePos.X;
-                checkForterrain.y = mousePos.Y;
-                foreach(Terrain ter in Terrain.terrains)
-                if(Raylib.CheckCollisionRecs(checkForterrain, ter.body))
-                {
-                    System.Console.WriteLine("waho");
-                }
+                
+                checkForterrain.x = mousePos.X - checkForterrain.width/2;
+                checkForterrain.y = mousePos.Y - checkForterrain.height/2;
+                
             }
             if(movementsToMake.Count > 0 && currentMoveToMake<movementsToMake.Count)
             {   
-            
-                
-                if(directionChanced)
-                {
-                    
-                    directionChanced = false;
-                    movementDirection.X = 0;
-                    movementDirection.Y = 0;
-                    
-                    movementDirection.X = movementsToMake[currentMoveToMake].X - MathF.Round(position.X);
-                    movementDirection.Y = movementsToMake[currentMoveToMake].Y - MathF.Round(position.Y);
-                    
-                    if(Math.Abs(movementDirection.X) > Math.Abs(movementDirection.Y))
-                    {
-                        movementDirection.Y = MathF.Round(movementDirection.Y/MathF.Abs(movementDirection.X));
-                        movementDirection.X = MathF.Round(movementDirection.X/MathF.Abs(movementDirection.X));
-                        
-                    }
-                    else
-                    {
-                        movementDirection.X = MathF.Round(movementDirection.X/MathF.Abs(movementDirection.Y));
-                        movementDirection.Y = MathF.Round(movementDirection.Y/MathF.Abs(movementDirection.Y));
-                        
-                    }
-                     
-                    movementDirection.X = MathF.Round(movementDirection.X);
-                    movementDirection.Y = MathF.Round(movementDirection.Y);
-
-                }
-                
-                
-
-                position.X += movementDirection.X * movementSpeed * Raylib.GetFrameTime();
-                position.Y += movementDirection.Y * movementSpeed * Raylib.GetFrameTime();
-
-                //System.Console.WriteLine(position.X);
-                //System.Console.WriteLine(position.Y + "y");
-                
-                if(movementDirection.Y == 0)
-                {
-                    if(movementDirection.X > 0)
-                    {
-                        if(position.X > movementsToMake[currentMoveToMake].X)
-                        {
-                            directionChanced = true;
-                            currentMoveToMake++;
-                            
-                        }
-                    }
-                    else
-                    {
-                        if(position.X < movementsToMake[currentMoveToMake].X)
-                        {
-                            directionChanced = true;
-                            currentMoveToMake++;
-                            
-                        }
-                    }
-                        
-                }
-                if(movementDirection.X == 0)
-                {
-                    if(movementDirection.Y > 0)
-                    {
-                        if(position.Y > movementsToMake[currentMoveToMake].Y)
-                        {
-                            directionChanced = true;
-                            currentMoveToMake++;
-                        }
-                    }
-                    else
-                    {
-                        if(position.Y < movementsToMake[currentMoveToMake].Y)
-                        {
-                            directionChanced = true;
-                            currentMoveToMake++;
-                            
-                        }
-                    }
-                        
-                }
-                body.x = position.X;
-                body.y = position.Y;
-                
-                
+                CalulateMovement();     
             }
             else
             {
@@ -158,7 +70,94 @@ namespace Stercroft
             
         }
 
-        
+        private void CalulateMovement()
+        {
+            
+                
+            if(directionChanced)
+            {
+                
+                directionChanced = false;
+                movementDirection.X = 0;
+                movementDirection.Y = 0;
+                
+                movementDirection.X = movementsToMake[currentMoveToMake].X - MathF.Round(position.X);
+                movementDirection.Y = movementsToMake[currentMoveToMake].Y - MathF.Round(position.Y);
+                
+                if(Math.Abs(movementDirection.X) > Math.Abs(movementDirection.Y))
+                {
+                    movementDirection.Y = MathF.Round(movementDirection.Y/MathF.Abs(movementDirection.X));
+                    movementDirection.X = MathF.Round(movementDirection.X/MathF.Abs(movementDirection.X));
+                    
+                }
+                else
+                {
+                    movementDirection.X = MathF.Round(movementDirection.X/MathF.Abs(movementDirection.Y));
+                    movementDirection.Y = MathF.Round(movementDirection.Y/MathF.Abs(movementDirection.Y));
+                    
+                }
+                    
+                movementDirection.X = MathF.Round(movementDirection.X);
+                movementDirection.Y = MathF.Round(movementDirection.Y);
+
+            }
+            
+            
+
+            position.X += movementDirection.X * movementSpeed * Raylib.GetFrameTime();
+            position.Y += movementDirection.Y * movementSpeed * Raylib.GetFrameTime();
+
+            //System.Console.WriteLine(position.X);
+            //System.Console.WriteLine(position.Y + "y");
+            
+            if(movementDirection.Y == 0)
+            {
+                if(movementDirection.X > 0)
+                {
+                    if(position.X > movementsToMake[currentMoveToMake].X)
+                    {
+                        directionChanced = true;
+                        currentMoveToMake++;
+                        
+                    }
+                }
+                else
+                {
+                    if(position.X < movementsToMake[currentMoveToMake].X)
+                    {
+                        directionChanced = true;
+                        currentMoveToMake++;
+                        
+                    }
+                }
+                    
+            }
+            if(movementDirection.X == 0)
+            {
+                if(movementDirection.Y > 0)
+                {
+                    if(position.Y > movementsToMake[currentMoveToMake].Y)
+                    {
+                        directionChanced = true;
+                        currentMoveToMake++;
+                    }
+                }
+                else
+                {
+                    if(position.Y < movementsToMake[currentMoveToMake].Y)
+                    {
+                        directionChanced = true;
+                        currentMoveToMake++;
+                        
+                    }
+                }
+                    
+            }
+            body.x = position.X;
+            body.y = position.Y;
+                
+ 
+        }
 
         private List<Tile> alreadyChecked = new List<Tile>();
         private Queue<Tile> needToCheck = new Queue<Tile>();
@@ -169,7 +168,7 @@ namespace Stercroft
             position.Y = (float.Parse(Math.Round(position.Y/25).ToString())* 25) + 6;
             alreadyChecked.Clear();
             needToCheck.Clear();
-            System.Console.WriteLine(position);
+            
             checkForterrain.x = position.X;
             checkForterrain.y = position.Y;
 
@@ -186,7 +185,7 @@ namespace Stercroft
                 if(Raylib.CheckCollisionRecs(checkForterrain, ter.body))
                 {
                     didCollide = true;
-                    System.Console.WriteLine(checkForterrain.x+ " " + checkForterrain.y);
+                    //System.Console.WriteLine(checkForterrain.x+ " " + checkForterrain.y);
                     
                 }
                 if(!didCollide)
@@ -195,13 +194,13 @@ namespace Stercroft
                 }
             }
             alreadyChecked.Add(currentlyChecking);
-            System.Console.WriteLine(needToCheck.Count);
+            //System.Console.WriteLine(needToCheck.Count);
             
             bool GoalFound = false;
             while(needToCheck.Count > 0 && !GoalFound)
             {
                 currentlyChecking = needToCheck.Dequeue();
-                System.Console.WriteLine("Checking: " + currentlyChecking.position);
+                //System.Console.WriteLine("Checking: " + currentlyChecking.position);
                 
                 foreach(Vector2 posToCheck in movements)
                 {
@@ -250,7 +249,7 @@ namespace Stercroft
                     }
                     if(checkForterrain.x < endPos.X + 13 && checkForterrain.x > endPos.X - 13 && checkForterrain.y < endPos.Y + 13 && checkForterrain.y > endPos.Y - 13)
                     {
-                        System.Console.WriteLine("GoalFound!!");
+                        //System.Console.WriteLine("GoalFound!!");
                         currentlyChecking = new Tile(currentlyChecking, currentlyChecking.movementCost+ 1, new Vector2(checkForterrain.x , checkForterrain.y));
                         GoalFound = true;
                     }
@@ -258,18 +257,18 @@ namespace Stercroft
                     
                 }
                 alreadyChecked.Add(currentlyChecking);
-                System.Console.WriteLine(needToCheck.Count);
+                //System.Console.WriteLine(needToCheck.Count);
             }
-            System.Console.WriteLine("starting draw");
+            //System.Console.WriteLine("starting draw");
             
             Tile previousTile = currentlyChecking;
             List<Vector2> tempList = new List<Vector2>();
             while(previousTile != null)
             {
-                System.Console.WriteLine(previousTile.position);
+                //System.Console.WriteLine(previousTile.position);
                 tempList.Add(previousTile.position);
                 previousTile = previousTile.previousTile;
-                System.Console.WriteLine("haj");
+                //System.Console.WriteLine("haj");
             }
             
             for (int i = tempList.Count-1; i >= 0; i--)
@@ -278,11 +277,6 @@ namespace Stercroft
             }
             
         }
-
-
-
-
-        
 
     }
 }

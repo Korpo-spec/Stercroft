@@ -15,7 +15,10 @@ namespace Stercroft
             new Terrain(25, 75);
             new Terrain(25, 100);
             Zorglong zorglis = new Zorglong(81f , 56f);
-            zorglis.movementSpeed = 65;
+            
+            //Zorglong.movementSpeed = 65;
+            
+            
             GameObject.camera.zoom = 1f; //A zoom variable for the camera to work
             GameObject.camera.target = new Vector2(0,0); // Where the camera is pointed at
             GameObject.camera.offset = new Vector2(0, 0);

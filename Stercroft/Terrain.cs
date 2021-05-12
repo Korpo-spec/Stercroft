@@ -15,6 +15,7 @@ namespace Stercroft
         {
             position.X = posX;
             position.Y = posY;
+            
             terrains.Add(this);
             System.Console.WriteLine(position);
             body = new Rectangle(position.X, position.Y, 25, 25);

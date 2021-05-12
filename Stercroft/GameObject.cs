@@ -9,6 +9,7 @@ namespace Stercroft
     {
         public Vector2 position = new Vector2(0, 0); //Variables for the position and rotation of the objects
 
+        
         public float rotation = 0f;
 
         public static List<GameObject> gameObjectsInScene = new List<GameObject>();
