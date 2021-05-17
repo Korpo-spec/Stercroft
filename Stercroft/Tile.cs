@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Stercroft
 {
-    public class Tile
+    public class Tile//storrage klass för all data som går till tiles som kollas
     {
 
         public Vector2 position;
