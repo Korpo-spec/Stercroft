@@ -15,7 +15,7 @@ namespace Stercroft
             position.Y = posY;
             anim = new Animation(Raylib.LoadTexture("professor_walk_cycle_no_hat.png"), 64);//Ger zorglong sin speciella Anim klass
             
-            movementSpeed = 65;// hur snabbt man rör sig
+            MovementSpeed = 65;// hur snabbt man rör sig
             body = new Rectangle(position.X, position.Y, 12.5f, 12.5f);//hitbox för karaktären
             
             
