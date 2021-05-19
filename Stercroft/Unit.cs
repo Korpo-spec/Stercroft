@@ -8,9 +8,9 @@ namespace Stercroft
     public class Unit :GameObject
     {
         private int hp;
-        public int movementSpeed{get; protected set;}
-        public float attackSpeed{get; protected set;}
-        public float attackRange{get; protected set;}
+        public int MovementSpeed{get; protected set;}
+        public float AttackSpeed{get; protected set;}
+        public float AttackRange{get; protected set;}
 
         private Vector2[] movements;
 
@@ -104,8 +104,8 @@ namespace Stercroft
             
             
 
-            position.X += movementDirection.X * movementSpeed * Raylib.GetFrameTime();//förflyttar relativt till movement direction
-            position.Y += movementDirection.Y * movementSpeed * Raylib.GetFrameTime();
+            position.X += movementDirection.X * MovementSpeed * Raylib.GetFrameTime();//förflyttar relativt till movement direction
+            position.Y += movementDirection.Y * MovementSpeed * Raylib.GetFrameTime();
 
             //System.Console.WriteLine(position.X);
             //System.Console.WriteLine(position.Y + "y");
