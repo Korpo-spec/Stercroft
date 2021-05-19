@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using Raylib_cs;
+using System.Collections.Generic;
 
 namespace Stercroft
 {
@@ -8,6 +9,39 @@ namespace Stercroft
     {
         static void Main(string[] args)
         {
+
+            Dictionary<string, int> stats = new Dictionary<string, int>();
+
+            stats.Add("Strength", 5 );
+            stats.Add("Charisma", 7);
+            stats.Add("Dexerity", 15);
+            stats.Add("Height", 180);
+            stats.Add("HP regen", 1);
+
+            Console.WriteLine("Create Custom stat");
+            Console.Write("Write name of the stat: ");
+            string name = Console.ReadLine();
+            bool acceptableAns = false;
+            int output = 0;
+            while (!acceptableAns)
+            {
+                Console.WriteLine("Write a valid integer: ");
+                string userInput = Console.ReadLine();
+                if(int.TryParse(userInput, out output))
+                {
+                    acceptableAns = true;
+                }
+            }
+            stats.Add(name, output);
+            foreach(string key in stats.Keys)
+            {
+                Console.WriteLine(key + ": " + stats[key]);
+            }
+
+            
+
+
+            Console.ReadLine();
             Raylib.InitWindow(1000, 800, "Stercroft"); //Sets the size and framerate of the game window
             Raylib.SetTargetFPS(60);
             Console.WriteLine("Hello World!");
